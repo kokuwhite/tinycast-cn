@@ -11,6 +11,10 @@ on:
         description: "Optional upstream release tag; empty selects the latest published release"
         type: string
         required: false
+      dry_run:
+        description: "Merge, test and check localization, but push and release nothing"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -86,6 +90,7 @@ jobs:
         if: steps.meta.outputs.should_release == 'true'
         env:
           UPSTREAM_TAG: ${{ steps.meta.outputs.upstream_tag }}
+          DRY_RUN: ${{ inputs.dry_run }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -112,6 +117,20 @@ jobs:
             report tests "$(tail -n 40 /tmp/tests.log)"
             exit 0
           fi
+          # A new upstream version almost always adds English literals that have no entry yet. This
+          # is where a sync normally stops, instead of shipping a half-translated build: it reports
+          # through the issue below and leaves `main` untouched.
+          if ! ./Scripts/check-localization.sh --extract > /tmp/l10n.log 2>&1; then
+            cat /tmp/l10n.log
+            report localization "$(tail -n 40 /tmp/l10n.log)"
+            exit 0
+          fi
+          # A dry run exercises the whole path — merge, tests, localization — and stops here.
+          if [ "${DRY_RUN}" = "true" ]; then
+            echo "Dry run: ${UPSTREAM_TAG} merges cleanly and every literal has an entry; nothing pushed."
+            report dry_run "Merge, tests and localization all pass; main was left untouched by request."
+            exit 0
+          fi
           git push origin HEAD:main
           {
             echo "merged=true"
@@ -120,7 +139,7 @@ jobs:
 
       # One open issue per upstream tag: a repeat dispatch must not restate the same news.
       - name: Report a blocked sync
-        if: steps.merge.outputs.merged == 'false'
+        if: steps.merge.outputs.merged == 'false' && steps.merge.outputs.blocker != 'dry_run'
         env:
           GH_TOKEN: ${{ github.token }}
           UPSTREAM_TAG: ${{ steps.meta.outputs.upstream_tag }}
@@ -134,10 +153,18 @@ jobs:
             echo "Issue '${TITLE}' is already open; nothing to add."
             exit 0
           fi
-          if [ "$BLOCKER" = "conflict" ]; then
-            SUMMARY="\`git merge ${UPSTREAM_TAG}\` stopped on conflicts in these files:"
+          case "$BLOCKER" in
+            conflict)
+              SUMMARY="\`git merge ${UPSTREAM_TAG}\` stopped on conflicts in these files:" ;;
+            localization)
+              SUMMARY="The merge is clean, but \`./Scripts/check-localization.sh --extract\` found literals with no Chinese entry yet. Output tail:" ;;
+            *)
+              SUMMARY="The merge applied cleanly but \`./Scripts/run-tests.sh\` failed. Last 40 lines:" ;;
+          esac
+          if [ "$BLOCKER" = "localization" ]; then
+            RESOLUTION_NOTE="Only translations are missing: add the new entries to \`Tinycast/zh-Hans.lproj/Localizable.strings\` (plus the \`.localizedUI\` calls and interpolated keys \`docs/sync-cn.md\` lists), push them, and re-dispatch — the merge is a no-op by then. \`main\` itself needs no merge work."
           else
-            SUMMARY="The merge applied cleanly but \`./Scripts/run-tests.sh\` failed. Last 40 lines:"
+            RESOLUTION_NOTE=""
           fi
           LABEL_ARGS=()
           if gh label create sync-blocked --color FBCA04 --description "Upstream sync needs a human" --force; then
@@ -153,6 +180,8 @@ jobs:
           \`\`\`
           ${DETAIL}
           \`\`\`
+
+          ${RESOLUTION_NOTE}
 
           To resolve locally:
 
