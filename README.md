@@ -6,8 +6,17 @@
 > Universal（`arm64` + `x86_64`）安装包。产品名仍为 **Tinycast**，bundle id 为
 > `com.kokuwhite.tinycast-cn`。
 >
-> 安装：到 [Releases](../../releases/latest) 下载 `Tinycast-CN-<version>.dmg`，把 `Tinycast.app`
-> 拖进「应用程序」。本构建是自签名的（与上游一致），macOS 首次会拦下它，清除一次隔离标记即可：
+> 安装（推荐 Homebrew：安装/升级时自动清隔离标记，之后 `brew upgrade --cask tinycast-cn` 即跟版）：
+>
+> ```sh
+> brew trust --tap kokuwhite/tinycast-cn   # 第三方 tap 需先信任
+> brew tap kokuwhite/tinycast-cn
+> brew install --cask tinycast-cn
+> ```
+>
+> 也可以直接下 DMG：到 [Releases](../../releases/latest) 取 `Tinycast-CN-<version>.dmg`，把
+> `Tinycast.app` 拖进「应用程序」。本构建是自签名的（与上游一致），macOS 首次会拦下它，手动清一次
+> 隔离标记即可：
 >
 > ```sh
 > xattr -dr com.apple.quarantine "/Applications/Tinycast.app"
@@ -94,9 +103,16 @@ keep it actively maintained. GitHub Sponsors isn't available in my country, so p
 
 ## Install
 
-Download `Tinycast-CN-<version>.dmg` from [Releases](../../releases/latest), drag `Tinycast.app`
-into **Applications**, then clear the quarantine flag once — this build is self-signed, the same as
-upstream:
+```sh
+brew trust --tap kokuwhite/tinycast-cn   # required for third-party taps
+brew tap kokuwhite/tinycast-cn
+brew install --cask tinycast-cn
+```
+
+Updates come the usual way: `brew upgrade --cask tinycast-cn`. Installing through Homebrew clears
+the quarantine flag on every install and upgrade. A DMG taken straight from
+[Releases](../../releases/latest) needs it cleared by hand once, since this build is self-signed
+like upstream:
 
 ```sh
 xattr -dr com.apple.quarantine "/Applications/Tinycast.app"
