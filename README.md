@@ -1,16 +1,19 @@
 # Tinycast
 
-> **tinycast-cn** 是面向中文用户的分支：完成了全量简体中文界面汉化，为中文应用名新增全拼与首字母搜索，
-> 并基于上游发布版本构建 Universal（`arm64` + `x86_64`）安装包。产品名仍为 **Tinycast**。
+> **本仓库是 `kokuwhite` 的中文构建分支**：界面汉化取自
+> [conversun/tinycast-cn](https://github.com/conversun/tinycast-cn)（AGPL-3.0），构建由
+> `sync-upstream-release.yml` 每 6 小时检查上游**最新正式版** release、自动合并并发布，产物为
+> Universal（`arm64` + `x86_64`）安装包。产品名仍为 **Tinycast**，bundle id 为
+> `com.kokuwhite.tinycast-cn`。
+>
+> 安装：到 [Releases](../../releases/latest) 下载 `Tinycast-CN-<version>.dmg`，把 `Tinycast.app`
+> 拖进「应用程序」。本构建是自签名的（与上游一致），macOS 首次会拦下它，清除一次隔离标记即可：
 >
 > ```sh
-> brew trust --tap conversun/tinycast-cn   # 第三方 tap 需要先信任
-> brew tap conversun/tinycast-cn
-> brew install --cask tinycast-cn
+> xattr -dr com.apple.quarantine "/Applications/Tinycast.app"
 > ```
 >
-> 后续 `brew upgrade --cask tinycast-cn` 即可更新。装成 `Tinycast.app`，与上游 `tinycast`、
-> `tinycast-sequoia` 两个 cask 占用同一路径，因此三者互斥，只能装其一。
+> 装成 `Tinycast.app`，与上游 `tinycast`、`tinycast-sequoia` 占用同一路径，因此三者互斥。
 
 **A tiny, fully native macOS launcher. One hotkey, everything you reach for all day, under 100 MB of
 RAM.**
@@ -91,23 +94,20 @@ keep it actively maintained. GitHub Sponsors isn't available in my country, so p
 
 ## Install
 
+Download `Tinycast-CN-<version>.dmg` from [Releases](../../releases/latest), drag `Tinycast.app`
+into **Applications**, then clear the quarantine flag once — this build is self-signed, the same as
+upstream:
+
 ```sh
-brew trust --tap conversun/tinycast-cn   # required for third-party taps
-brew tap conversun/tinycast-cn
-brew install --cask tinycast-cn
+xattr -dr com.apple.quarantine "/Applications/Tinycast.app"
 ```
 
-Updates come the usual way: `brew upgrade --cask tinycast-cn`. The app has no built-in updater and
-makes no network call of its own unless you turn on currency conversion.
+The app has no built-in updater and makes no network call of its own unless you turn on currency
+conversion. New builds appear here as upstream cuts a new stable release.
 
 This is the Chinese build, installed as `Tinycast.app` — the same path the upstream `tinycast`,
-`tinycast-universal` and `tinycast-sequoia` casks own, so the cask conflicts with all three. Pick
-one, or install the upstream `tinycast@beta` alongside it (that one is `Tinycast Beta.app`).
-
-Tinycast is self-signed. Installing via Homebrew clears the macOS quarantine flag for you
-automatically on every install and update, so there's nothing to run. (If you download the DMG
-directly from Releases instead, clear it once: `xattr -dr com.apple.quarantine
-"/Applications/Tinycast.app"`.)
+`tinycast-universal` and `tinycast-sequoia` casks own, so pick one. (The upstream `tinycast@beta`
+installs alongside it as `Tinycast Beta.app`.)
 
 ## Permissions
 

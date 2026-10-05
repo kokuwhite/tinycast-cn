@@ -12,7 +12,7 @@
 发 `<上游版本>-cn.1`。对应 release 已存在时十几秒内退出，幂等，无需干预。
 
 ```sh
-gh workflow run sync-upstream-release.yml --repo conversun/tinycast-cn
+gh workflow run sync-upstream-release.yml --repo kokuwhite/tinycast-cn
 # 指定上游 tag：额外加 -f upstream_tag=vX.Y.Z
 ```
 
@@ -132,14 +132,14 @@ v0.10.2 那次，292 条用户可见字符串里有 200 条只加词条不生效
 ## 手动补发 release
 
 ```sh
-gh workflow run release-cn.yml --repo conversun/tinycast-cn \
+gh workflow run release-cn.yml --repo kokuwhite/tinycast-cn \
   -f version=<上游版本>-cn.N -f prerelease=<跟随上游> \
   -f upstream_tag=vX.Y.Z -f ref=<commit sha>
 ```
 
 - 版本规则：同步工作流固定发 `-cn.1`；同一上游版本之上再发汉化跟进，用 `-cn.2` 起手动派发。
 - release 发布后，同步工作流检测到同名 release 即跳过，两者互不干扰。
-- 成功后自动 bump [homebrew-tinycast-cn](https://github.com/conversun/homebrew-tinycast-cn)
+- 成功后自动 bump [homebrew-tinycast-cn](https://github.com/kokuwhite/homebrew-tinycast-cn)
   的 cask（version + sha256），无需手动操作；`prerelease=true` 的派发只发 GitHub release，
   不动 cask —— `brew upgrade --cask tinycast-cn` 是稳定通道。
 
