@@ -1,0 +1,46 @@
+name: Probe tests
+
+# Temporary: runs the test harness against a chosen upstream ref, to tell an environment or
+# pre-existing failure apart from one this fork introduced. Delete once the question is answered.
+on:
+  workflow_dispatch:
+    inputs:
+      repository:
+        description: "Repo to check out"
+        type: string
+        default: "abue-ammar/tinycast"
+      ref:
+        description: "Ref to check out"
+        type: string
+        default: "v0.11.12"
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          repository: ${{ inputs.repository }}
+          ref: ${{ inputs.ref }}
+
+      - name: Select Xcode 26
+        run: |
+          XCODE_CANDIDATES=(/Applications/Xcode_26*.app)
+          XCODE_PATH="$(printf '%s\n' "${XCODE_CANDIDATES[@]}" | sort -V | tail -n1)"
+          echo "DEVELOPER_DIR=$XCODE_PATH/Contents/Developer" >> "$GITHUB_ENV"
+
+      - name: Which tree
+        run: git log --oneline -1 && git describe --tags --always
+
+      - name: Run the harness
+        run: |
+          set +e
+          ./Scripts/run-tests.sh > "$RUNNER_TEMP/tests.log" 2>&1
+          STATUS=$?
+          echo "run-tests exit: $STATUS"
+          grep -E "^\[[0-9]+/[0-9]+\]|FAILED|passed,|^--- " "$RUNNER_TEMP/tests.log" | tail -40
+          echo "::notice::run-tests exit $STATUS"
+          exit 0
