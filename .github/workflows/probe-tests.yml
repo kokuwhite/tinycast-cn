@@ -13,6 +13,10 @@ on:
         description: "Ref to check out"
         type: string
         default: "v0.11.12"
+      script:
+        description: "Script to run in the checked-out tree"
+        type: string
+        default: "./Scripts/run-tests.sh"
 
 permissions:
   contents: read
@@ -35,12 +39,12 @@ jobs:
       - name: Which tree
         run: git log --oneline -1 && git describe --tags --always
 
-      - name: Run the harness
+      - name: Run the script
         run: |
           set +e
-          ./Scripts/run-tests.sh > "$RUNNER_TEMP/tests.log" 2>&1
+          bash -c "${{ inputs.script }}" > "$RUNNER_TEMP/out.log" 2>&1
           STATUS=$?
-          echo "run-tests exit: $STATUS"
-          grep -E "^\[[0-9]+/[0-9]+\]|FAILED|passed,|^--- " "$RUNNER_TEMP/tests.log" | tail -40
-          echo "::notice::run-tests exit $STATUS"
+          echo "${{ inputs.script }} exit: $STATUS"
+          tail -n 90 "$RUNNER_TEMP/out.log"
+          echo "::notice::${{ inputs.script }} exited $STATUS"
           exit 0
