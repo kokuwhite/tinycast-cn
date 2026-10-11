@@ -57,12 +57,17 @@ jobs:
           security list-keychains -d user -s "$KEYCHAIN"
           rm -f "$RUNNER_TEMP/cert.p12"
 
+      # The script goes through an env var, never through the run: line: GitHub substitutes an
+      # expression there before the shell parses it, so any quote or pipe in the script would be
+      # re-interpreted (or silently stripped) on the way in.
       - name: Run the script
+        env:
+          PROBE_SCRIPT: ${{ inputs.script }}
         run: |
           set +e
-          bash -c "${{ inputs.script }}" > "$RUNNER_TEMP/out.log" 2>&1
+          bash -c "$PROBE_SCRIPT" > "$RUNNER_TEMP/out.log" 2>&1
           STATUS=$?
-          echo "${{ inputs.script }} exit: $STATUS"
-          tail -n 90 "$RUNNER_TEMP/out.log"
-          echo "::notice::${{ inputs.script }} exited $STATUS"
+          echo "$PROBE_SCRIPT exit: $STATUS"
+          tail -n 200 "$RUNNER_TEMP/out.log"
+          echo "::notice::$PROBE_SCRIPT exited $STATUS"
           exit 0
