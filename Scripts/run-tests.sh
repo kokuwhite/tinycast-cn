@@ -145,6 +145,7 @@ run launcher-file-test     $L/LauncherFileFormat.swift \
                            Tinycast/Features/Settings/Model/SettingsFileJSON.swift
 run launcher-settings-file-test \
                            $L/LauncherFileFormat.swift $L/CommandID.swift $L/CommandCatalog.swift \
+                           Tinycast/Platform/Localization.swift \
                            Tinycast/Features/Launcher/Service/LauncherSettingsFile.swift \
                            Tinycast/Features/Launcher/Service/AliasStore.swift \
                            Tinycast/Features/Launcher/Service/VisibilityStore.swift \
@@ -248,6 +249,7 @@ run form-input-test        Tinycast/Platform/Appearance.swift \
                            Tinycast/DesignSystem/Theme.swift \
                            Tinycast/DesignSystem/InterfaceMetrics.swift \
                            Tinycast/DesignSystem/FormTextInput.swift \
+                           Tinycast/Platform/Localization.swift \
                            Tinycast/DesignSystem/FormTextArea.swift
 run scroll-reveal-test     Tinycast/DesignSystem/Scrolling/SelectionReveal.swift
 run redaction-test         Tinycast/DesignSystem/RedactedPlaceholder.swift
