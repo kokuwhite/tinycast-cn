@@ -121,9 +121,9 @@ enum ClipboardDefaultAction: String, CaseIterable, Identifiable, Sendable {
 
     var title: String {
         switch self {
-        case .paste: return "Paste"
-        case .copy: return "Copy to Clipboard"
-        case .pastePlainText: return "Paste as Plain Text"
+        case .paste: return "Paste".localizedUI
+        case .copy: return "Copy to Clipboard".localizedUI
+        case .pastePlainText: return "Paste as Plain Text".localizedUI
         }
     }
 

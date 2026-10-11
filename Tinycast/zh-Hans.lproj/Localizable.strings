@@ -2637,3 +2637,10 @@
 "Snippet name" = "文本片段名称";
 "Search layouts…" = "搜索布局…";
 "Filter by category  ⌘P" = "按分类筛选  ⌘P";
+
+/* Upstream v0.11.19 汉化跟进（-cn.2）：通用/权限/剪贴板/日历面板。 */
+"Automatically check for updates" = "自动检查更新";
+"Only join known meeting services" = "只加入已知的会议服务";
+"Open" = "打开";
+"Path" = "路径";
+"%@ to %@" = "%@到 %@";

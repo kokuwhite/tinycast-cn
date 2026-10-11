@@ -85,7 +85,7 @@ struct PermissionsSettingsView: View {
                         HStack(spacing: Theme.Spacing.xs) {
                             Image(systemName: microphoneStatus.symbol)
                                 .accessibilityHidden(true)
-                            Text(microphoneStatus.title)
+                            Text(microphoneStatus.title.localizedUI)
                         }
                         .foregroundStyle(microphoneStatus.tint)
                         Button(microphoneAccess == .notDetermined ? "Grant Access…" : "Open…") {

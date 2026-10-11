@@ -274,6 +274,6 @@ extension ClipboardDefaultAction {
     /// A paste names the app it lands in, in the footer pill and the ⌘K menu alike.
     func title(pastingInto target: PasteTarget?) -> String {
         guard let target, self != .copy else { return title }
-        return "\(title) to \(target.name)"
+        return String(localized: "\(title) to \(target.name)")
     }
 }
