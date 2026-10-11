@@ -54,9 +54,9 @@ struct CustomCommandPreview: View {
                         ForEach(rows) { row in
                             if row.id != rows.first?.id { Divider() }
                             HStack(spacing: metrics.spacing.sm) {
-                                Text(row.label).foregroundStyle(Theme.Colors.textSecondary)
+                                Text(row.label.localizedUI).foregroundStyle(Theme.Colors.textSecondary)
                                 Spacer(minLength: metrics.spacing.lg)
-                                Text(row.value).lineLimit(1).truncationMode(.middle)
+                                Text(row.value.localizedUI).lineLimit(1).truncationMode(.middle)
                             }
                             .font(metrics.typography.keyCap)
                             .padding(.vertical, metrics.spacing.xs)

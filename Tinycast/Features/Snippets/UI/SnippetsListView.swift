@@ -151,9 +151,9 @@ private struct SnippetInfoSection: View {
                 ForEach(rows) { row in
                     if row.id != rows.first?.id { Divider() }
                     HStack(spacing: metrics.spacing.sm) {
-                        Text(row.label).foregroundStyle(.secondary)
+                        Text(row.label.localizedUI).foregroundStyle(.secondary)
                         Spacer(minLength: metrics.spacing.lg)
-                        Text(row.value).lineLimit(1).truncationMode(.middle)
+                        Text(row.value.localizedUI).lineLimit(1).truncationMode(.middle)
                     }
                     .font(metrics.typography.keyCap)
                     .padding(.vertical, metrics.spacing.xs)

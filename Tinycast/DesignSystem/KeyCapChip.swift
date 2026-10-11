@@ -10,11 +10,11 @@ struct KeyCapChip: View {
         var body: some View {
             if let prefix {
                 HStack(spacing: spacing) {
-                    Text(prefix).textScale(.secondary)
-                    Text(text)
+                    Text(prefix.localizedUI).textScale(.secondary)
+                    Text(text.localizedUI)
                 }
             } else {
-                Text(text)
+                Text(text.localizedUI)
             }
         }
     }

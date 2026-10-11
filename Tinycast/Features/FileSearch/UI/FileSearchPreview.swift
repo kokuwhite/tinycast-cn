@@ -100,7 +100,7 @@ private struct FileSearchInfoSection: View {
                     HStack(spacing: metrics.spacing.sm) {
                         Text(row.label.localizedUI).foregroundStyle(.secondary)
                         Spacer(minLength: metrics.spacing.lg)
-                        Text(row.value).lineLimit(1).truncationMode(.middle)
+                        Text(row.value.localizedUI).lineLimit(1).truncationMode(.middle)
                     }
                     .font(metrics.typography.keyCap)
                     .padding(.vertical, metrics.spacing.xs)

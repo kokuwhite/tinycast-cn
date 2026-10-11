@@ -65,8 +65,11 @@ struct DictationSettingsView: View {
                     if settings.dictationMode == .pushToTalk {
                         let issue = coordinator.holdShortcutIssue
                         Text(
-                            issue ?? "Hold a key combination or a single modifier; release it to transcribe. "
-                                + "Double taps work in toggle mode."
+                            issue
+                                ?? String(
+                                    localized:
+                                        "Hold a key combination or a single modifier; release it to transcribe. Double taps work in toggle mode."
+                                )
                         )
                         .font(.caption)
                         .foregroundStyle(issue == nil ? Color.secondary : Color.orange)
@@ -113,7 +116,7 @@ struct DictationSettingsView: View {
                                             || coordinator.models.removing == settings.dictationModel)
                             }
                         } label: {
-                            Text(installed ? "Installed" : "Not installed")
+                            Text(installed ? String(localized: "Installed") : String(localized: "Not installed"))
                             Text(modelDescription)
                         }
                     }
@@ -122,7 +125,7 @@ struct DictationSettingsView: View {
                             Text("Auto").tag("")
                             Divider()
                             ForEach(DictationLanguage.allCases) { language in
-                                Text(language.rawValue).tag(language.rawValue)
+                                Text(language.rawValue.localizedUI).tag(language.rawValue)
                             }
                         } label: {
                             SettingsRowTitle(.dictationModel, "Language")
@@ -148,7 +151,11 @@ struct DictationSettingsView: View {
 
                 Section {
                     Picker(selection: microphoneBinding) {
-                        Text(microphones.isEmpty ? "No microphone available" : "System default")
+                        Text(
+                            microphones.isEmpty
+                                ? String(localized: "No microphone available")
+                                : String(localized: "System default")
+                        )
                             .tag("")
                         if !microphones.isEmpty { Divider() }
                         ForEach(microphones, id: \.uniqueID) { microphone in
@@ -232,8 +239,16 @@ struct DictationSettingsView: View {
     }
 
     private var modelDescription: String {
-        modelSize.map { "\(ByteCountFormatter.string(fromByteCount: $0, countStyle: .file)) on disk" }
-            ?? "About \(settings.dictationModel.approximateInstalledMegabytes) MB on disk"
+        modelSize.map {
+            String(
+                localized:
+                    "\(ByteCountFormatter.string(fromByteCount: $0, countStyle: .file)) on disk"
+            )
+        }
+            ?? String(
+                localized:
+                    "About \(settings.dictationModel.approximateInstalledMegabytes) MB on disk"
+            )
     }
 
     private struct DownloadProgressView: View {
@@ -245,7 +260,7 @@ struct DictationSettingsView: View {
                 LabeledContent {
                     Button("Cancel") { models.cancelDownload() }
                 } label: {
-                    Text(title)
+                    Text(title.localizedUI)
                 }
                 if let progress, progress.total > 0 {
                     ProgressView(value: Double(progress.received), total: Double(progress.total))

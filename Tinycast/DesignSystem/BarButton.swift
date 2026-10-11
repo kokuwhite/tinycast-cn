@@ -116,7 +116,7 @@ struct HeaderMenuButton: View {
                 case .thumbnail(let id, let data):
                     MenuThumbnail(id: id, data: data)
                 }
-                Text(title)
+                Text(title.localizedUI)
                     .font(metrics.typography.bar)
                     .lineLimit(1)
                     .truncationMode(.middle)
