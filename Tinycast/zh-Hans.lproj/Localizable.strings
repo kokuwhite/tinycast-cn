@@ -2509,3 +2509,44 @@
 "Microphone" = "麦克风";
 "Create Custom Command" = "创建自定义命令";
 "Search Custom Commands" = "搜索自定义命令";
+
+/* Upstream v0.11.12 → v0.11.19：听写（模型下载与麦克风权限）、命令与快速链接编辑器、
+   日程编辑器、网页搜索，以及若干状态标签。 */
+"Add Argument" = "添加参数";
+"Asks macOS for microphone access." = "向 macOS 请求麦克风访问权限。";
+"Attach Files…" = "附加文件…";
+"Attach files, search the web, choose tools" = "附加文件、搜索网页、选择工具";
+"Check for Updates remains available when off." = "关闭后仍可手动检查更新。";
+"Command editor" = "命令编辑器";
+"Command icon" = "命令图标";
+"Delete Custom Command" = "删除自定义命令";
+"Dictate" = "听写";
+"Dictation listening" = "听写中";
+"Event editor" = "日程编辑器";
+"Looking up extension…" = "正在查找扩展…";
+"Match the first letter to the text before the cursor." = "将首字母与光标前的文字匹配。";
+"Microphone access required" = "需要麦克风权限";
+"Model download progress" = "模型下载进度";
+"Needed to record your dictation." = "录制听写内容所必需。";
+"No microphone available" = "没有可用的麦克风";
+"Opens Privacy & Security › Microphone." = "打开“隐私与安全性”›“麦克风”。";
+"Preparing model download" = "正在准备下载模型";
+"Press Return to finish dictating or Escape to cancel. Protected fields may refuse insertion." = "按 Return 结束听写，或按 Escape 取消。受保护的输入框可能拒绝插入。";
+"Quicklink editor" = "快速链接编辑器";
+"Quicklink icon" = "快速链接图标";
+"Records audio only while dictating." = "仅在听写时录制音频。";
+"Releasing it when idle frees memory. The next dictation takes a moment longer." = "空闲时释放可腾出内存，下次听写会稍慢一些。";
+"Remove argument" = "移除参数";
+"Search custom commands…" = "搜索自定义命令…";
+"Snippet editor" = "文本片段编辑器";
+"Stop Dictating" = "停止听写";
+"System default" = "系统默认";
+"Toggle Microphone Mute" = "切换麦克风静音";
+"Tools · %lld of %lld" = "工具 · %lld/%lld";
+"Tools · Not with this model" = "工具 · 此模型不支持";
+"Tools · Off" = "工具 · 关";
+"Transcribing dictation" = "正在转写听写内容";
+"Use placeholders for the clipboard, current date, arguments and more." = "使用占位符插入剪贴板内容、当前日期、参数等。";
+"Web Search" = "联网搜索";
+"Web search is on; click to turn it off" = "网络搜索已开启；点击可关闭";
+"“%@/%@" is unavailable in the Raycast Store." = "“%@/%@"在 Raycast 商店中不可用。";
