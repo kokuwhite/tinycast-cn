@@ -229,6 +229,8 @@ struct AppEntry: Sendable {
     let kind: Kind
     var settingsOwner: SettingsTab?
     var subtitle: String?
+    /// CommandCatalog passes this through, so the stub has to carry it too.
+    var alternateTitles: [String] = []
     var preferenceKey: String { bundleID ?? id }
 }
 

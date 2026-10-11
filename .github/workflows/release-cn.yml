@@ -92,9 +92,11 @@ jobs:
       # already known to fail here and still fails on anything new.
       - name: Run the test harness
         env:
-          # ext-test: reproduced on upstream v0.11.12, host-lifecycle assertions. mcp-oauth-test:
-          # signs in against a live provider. Neither touches the localization.
-          KNOWN_FAILURES: "ext-test mcp-oauth-test"
+          # ext-test: reproduced on upstream v0.11.12, host-lifecycle assertions. form-input-test:
+          # its eight rendering assertions fail on a clean macos-26 runner with upstream v0.11.19's
+          # own tree, no fork changes applied. mcp-oauth-test: signs in against a live provider.
+          # None of them touches the localization.
+          KNOWN_FAILURES: "ext-test mcp-oauth-test form-input-test"
         run: |
           set +e
           ./Scripts/run-tests.sh > "$RUNNER_TEMP/tests.log" 2>&1
