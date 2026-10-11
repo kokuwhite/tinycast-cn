@@ -2501,3 +2501,11 @@
 "Install only from someone you trust." = "请仅安装来自可信来源的扩展。";
 "Every saved conversation except pinned ones will be removed. " = "将移除除置顶对话外的所有已保存对话。";
 "—  %@" = "—  %@";
+
+/* Upstream v0.11.3 → v0.11.19：听写、自定义命令，以及设置窗格与搜索目录新增的词条。 */
+"Dictation" = "听写";
+"Memory" = "内存";
+"Output" = "输出";
+"Microphone" = "麦克风";
+"Create Custom Command" = "创建自定义命令";
+"Search Custom Commands" = "搜索自定义命令";

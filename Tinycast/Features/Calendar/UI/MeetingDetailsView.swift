@@ -71,7 +71,7 @@ struct MeetingDetailsView: View {
 
     private func sectionHeader(_ title: String) -> some View {
         VStack(alignment: .leading, spacing: metrics.spacing.xs) {
-            Text(title)
+            Text(title.localizedUI)
                 .font(metrics.typography.sectionHeader)
                 .foregroundStyle(Theme.Colors.textTertiary)
             Rectangle()
@@ -98,7 +98,7 @@ private struct AttendeeRow: View {
                     .foregroundStyle(Theme.Colors.textTertiary)
             }
             Spacer(minLength: metrics.spacing.md)
-            Text(attendee.response.label)
+            Text(attendee.response.label.localizedUI)
                 .font(metrics.typography.rowTrailing)
                 .foregroundStyle(Theme.Colors.textSecondary)
         }
