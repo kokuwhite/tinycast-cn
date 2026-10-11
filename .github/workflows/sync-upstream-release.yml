@@ -112,7 +112,7 @@ jobs:
             report conflict "$CONFLICTS"
             exit 0
           fi
-          if ! ./Scripts/run-tests.sh > /tmp/tests.log 2>&1; then
+          if ! RUN_TESTS_LOG=/tmp/tests.log ./Scripts/run-tests-gate.sh > /tmp/tests.log 2>&1; then
             cat /tmp/tests.log
             report tests "$(tail -n 40 /tmp/tests.log)"
             exit 0
@@ -162,7 +162,7 @@ jobs:
             localization)
               SUMMARY="The merge is clean, but \`./Scripts/check-localization.sh --extract\` found literals with no Chinese entry yet. Output tail:" ;;
             *)
-              SUMMARY="The merge applied cleanly but \`./Scripts/run-tests.sh\` failed. Last 40 lines:" ;;
+              SUMMARY="The merge applied cleanly but \`./Scripts/run-tests-gate.sh\` failed. Last 40 lines:" ;;
           esac
           if [ "$BLOCKER" = "localization" ]; then
             RESOLUTION_NOTE="Only translations are missing: add the new entries to \`Tinycast/zh-Hans.lproj/Localizable.strings\` (plus the \`.localizedUI\` calls and interpolated keys \`docs/sync-cn.md\` lists), push them, and re-dispatch — the merge is a no-op by then. \`main\` itself needs no merge work."

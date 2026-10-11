@@ -90,42 +90,12 @@ jobs:
       # v0.11.12 itself fails ext-test (295 passed, 2 failed) with nothing from this fork applied,
       # and upstream's release workflow never runs it. So the release tolerates the harnesses
       # already known to fail here and still fails on anything new.
+      # The gate (and its documented known-failure list) lives in Scripts/run-tests-gate.sh, shared
+      # with the sync workflow so both agree on what a passing harness means.
       - name: Run the test harness
         env:
-          # ext-test: reproduced on upstream v0.11.12, host-lifecycle assertions. form-input-test:
-          # its eight rendering assertions fail on a clean macos-26 runner with upstream v0.11.19's
-          # own tree, no fork changes applied. mcp-oauth-test: signs in against a live provider.
-          # None of them touches the localization.
-          KNOWN_FAILURES: "ext-test mcp-oauth-test form-input-test"
-        run: |
-          set +e
-          ./Scripts/run-tests.sh > "$RUNNER_TEMP/tests.log" 2>&1
-          STATUS=$?
-          set -e
-          tail -n 8 "$RUNNER_TEMP/tests.log"
-          if [ "$STATUS" -eq 0 ]; then
-            echo "The full harness passed."
-            exit 0
-          fi
-          SUMMARY="$(sed -e $'s/\033\\[[0-9;]*m//g' -e $'s/\r//g' "$RUNNER_TEMP/tests.log" \
-            | sed -n 's/.*harness(es) failed in [0-9]*s: //p' | tail -1)"
-          if [ -z "$SUMMARY" ]; then
-            echo "::error::run-tests.sh exited $STATUS without a failure summary."
-            exit 1
-          fi
-          echo "Failing harnesses: ${SUMMARY}"
-          UNEXPECTED=""
-          for NAME in $SUMMARY; do
-            case " ${KNOWN_FAILURES} " in
-              *" ${NAME} "*) echo "Tolerated (known CI failure): ${NAME}" ;;
-              *) UNEXPECTED="${UNEXPECTED} ${NAME}" ;;
-            esac
-          done
-          if [ -n "${UNEXPECTED}" ]; then
-            echo "::error::Unexpected harness failure(s):${UNEXPECTED}"
-            exit 1
-          fi
-          echo "Only known CI failures — continuing."
+          RUN_TESTS_LOG: ${{ runner.temp }}/tests.log
+        run: ./Scripts/run-tests-gate.sh
 
       - name: Build and verify Universal app
         env:
