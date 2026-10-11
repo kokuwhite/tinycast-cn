@@ -10,8 +10,7 @@ enum DictationModel: String, CaseIterable, Identifiable, Codable, Sendable {
         case parakeet = "Parakeet", qwen = "Qwen"
         var id: Self { self }
         var summary: String {
-            self == .parakeet
-                ? "Fast and memory-efficient".localizedUI : "More languages, but slower".localizedUI
+            self == .parakeet ? "Fast and memory-efficient" : "More languages, but slower"
         }
     }
     case redux
@@ -32,10 +31,10 @@ enum DictationModel: String, CaseIterable, Identifiable, Codable, Sendable {
 
     var summary: String {
         switch self {
-        case .redux: "Lightweight and efficient.".localizedUI
-        case .ultra: "Higher accuracy, larger download.".localizedUI
-        case .qwenSmall: "Smaller and faster.".localizedUI
-        case .qwenLarge: "Higher accuracy, more memory.".localizedUI
+        case .redux: "Lightweight and efficient."
+        case .ultra: "Higher accuracy, larger download."
+        case .qwenSmall: "Smaller and faster."
+        case .qwenLarge: "Higher accuracy, more memory."
         }
     }
 
@@ -55,8 +54,8 @@ enum DictationModel: String, CaseIterable, Identifiable, Codable, Sendable {
     }
     var coverage: String {
         switch self {
-        case .ultra, .redux: "25 languages".localizedUI
-        case .qwenSmall, .qwenLarge: "30 languages and 22 Chinese dialects".localizedUI
+        case .ultra, .redux: "25 languages"
+        case .qwenSmall, .qwenLarge: "30 languages and 22 Chinese dialects"
         }
     }
     var folderName: String { isQwen ? rawValue : "parakeet-\(rawValue)" }

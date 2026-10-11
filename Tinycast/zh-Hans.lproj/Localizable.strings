@@ -2493,8 +2493,6 @@
 "Ready · %@" = "就绪 · %@";
 "Ticked models appear in the model picker. The default model always does; " = "勾选的模型会显示在模型选择器中。默认模型始终显示，";
 "choose it on the AI pane." = "请在 AI 设置面板中选择。";
-"A reply stops after this many; Unlimited runs until Stop. " = "回复达到此轮数后停止；“不限”会持续运行，直到手动停止。";
-"API connections, Codex and Claude." = "适用于 API 连接、Codex 和 Claude。";
 "Builds an extension from source on this Mac. Only the build is kept — " = "在本机从源码构建扩展。仅保留构建结果，";
 "the source and its dependencies are deleted once it installs." = "安装完成后删除源码及其依赖。";
 "Installing runs your package manager and the extension's own build script. " = "安装时会运行你的包管理器和扩展的构建脚本。";

@@ -86,7 +86,7 @@ struct DictationSettingsView: View {
                     } label: {
                         SettingsRowTitle(.dictationModel, "Engine")
                         Text(
-                            settings.dictationModel.family.summary + " · " + settings.dictationModel.coverage)
+                            settings.dictationModel.family.summary.localizedUI + " · " + settings.dictationModel.coverage.localizedUI)
                     }
                     Picker(selection: $settings.dictationModel) {
                         ForEach(
@@ -96,7 +96,7 @@ struct DictationSettingsView: View {
                         }
                     } label: {
                         SettingsRowTitle(.dictationModel, "Model")
-                        Text(settings.dictationModel.summary)
+                        Text(settings.dictationModel.summary.localizedUI)
                     }
 
                     let installed = coordinator.models.isInstalled(settings.dictationModel)
