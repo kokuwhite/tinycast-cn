@@ -90,7 +90,6 @@ private struct ArgumentField: View {
                 .strokeBorder(
                     stroke, lineWidth: isFocused ? form.focusStrokeWidth : Theme.Size.hairline)
         )
-        .onHover { hovered = $0 }
         .help(
             argument.required
                 ? String(localized: "\(argument.placeholder) — required")
